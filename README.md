@@ -18,7 +18,8 @@ Filters are kept in the URL, so any filtered view can be shared as a link.
 index.html  matrix.html  wallet.html   page shells (all drawing happens in app.js)
 assets/styles.css                     theme tokens in :root + all styles
 assets/app.js                         loads data.json and renders each page
-assets/favicon.svg
+assets/Canton-Foundation-Logo-Dark.svg   official wordmark (same as sv-cal)
+assets/favicon.png                    Canton "C" favicon (same as sv-cal)
 data.json                             generated, do not edit by hand
 scripts/build_data.py                 wallets repo YAML -> data.json
 .github/workflows/sync-data.yml       hourly refresh of data.json
@@ -55,4 +56,4 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-After changing `styles.css` or `app.js`, bump the `?v=` number in the three HTML files so browsers fetch the new version.
+After changing `styles.css` or `app.js`, bump the `?v=` number (currently 2) in the three HTML files so browsers fetch the new version.
