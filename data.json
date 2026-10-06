@@ -1,0 +1,1742 @@
+{
+ "generated_at": "2026-10-06 15:29 UTC",
+ "source_repo": "https://github.com/canton-foundation/wallets",
+ "source_commit": "00e1b0e",
+ "features": [
+  {
+   "id": "wallet_model",
+   "name": "Retail / Enterprise",
+   "category": "Wallet Type",
+   "type": "freetext",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": true
+  },
+  {
+   "id": "custody_model",
+   "name": "Custody Type",
+   "category": "Wallet Type",
+   "type": "freetext",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": true
+  },
+  {
+   "id": "form_factor",
+   "name": "Form factor (Mobile / Browser / Desktop / Browser Extension / Hardware)",
+   "category": "Wallet Type",
+   "type": "freetext",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": true
+  },
+  {
+   "id": "deployment_model",
+   "name": "Deployment Model (Self-hosted / SaaS / Hybrid)",
+   "category": "Wallet Type",
+   "type": "freetext",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": true
+  },
+  {
+   "id": "cc_support",
+   "name": "CC support",
+   "category": "Canton Coin",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Send CC to and from the wallet. Record the transaction update IDs and optionally provide screenshots of the holding, transfer, and party ID.",
+   "primary": true
+  },
+  {
+   "id": "two_step_cc_transfers",
+   "name": "Two-step CC transfers",
+   "category": "Canton Coin",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Perform a two-step CC transfer (propose/create followed by a separate accept/settle step, rather than a single atomic send). Record the transaction update ID(s) for both steps and optionally provide screenshots of each.",
+   "primary": true
+  },
+  {
+   "id": "preapprovals",
+   "name": "Pre-approvals for CC",
+   "category": "Canton Coin",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Enable pre-approvals for CC. Send CC to the wallet address. Confirm the transfer was auto-accepted. Record the transaction update IDs and optionally provide screenshots of the holding, transfer, and party ID.",
+   "primary": true
+  },
+  {
+   "id": "cip_0056_transfer",
+   "name": "CIP-0056 token standard transfer support",
+   "category": "Token Standard",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Send a CIP-0056-compatible token (not Canton Coin) to and from the wallet. Record the transaction update IDs and optionally provide screenshots of the holding, transfer, and party ID.",
+   "primary": true
+  },
+  {
+   "id": "cip_0056_allocation",
+   "name": "CIP-0056 token standard allocation support",
+   "category": "Token Standard",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Create and settle a CIP-0056 allocation (distinct from a plain transfer). Record the transaction update ID(s) for the allocation and its settlement, and optionally provide screenshots of the allocation before and after settlement.",
+   "primary": true
+  },
+  {
+   "id": "cip_112_v2",
+   "name": "CIP-112 token standard v2 support",
+   "category": "Token Standard",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Send or hold a CIP-112 v2 token in the wallet. Record the transaction update ID and optionally provide screenshots of the holding and transfer, noting the CIP-112 version in the token metadata.",
+   "primary": true
+  },
+  {
+   "id": "memo_tag_support",
+   "name": "Memo tag support for transfers to omnibus accounts",
+   "category": "Token Standard",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Include a memo tag in an asset transfer (this can be combined with the cc_support test). Record the transaction update ID showing the memo tag under the splice.lfdecentralizedtrust.org/reason metadata in the transaction JSON.",
+   "primary": true
+  },
+  {
+   "id": "cip_0103_dapp_api",
+   "name": "CIP-0103 dApp API support",
+   "category": "dApp Connectivity (CIP-103)",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Connect to a dApp using a CIP-0103 connection. Initiate a transaction from within the dApp and sign it from the wallet. Confirm the successful transaction. Optionally provide screenshots or a video recording.",
+   "primary": true
+  },
+  {
+   "id": "walletconnect_support",
+   "name": "Wallet Connect support",
+   "category": "dApp Connectivity (CIP-103)",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Connect to a dApp using Wallet Connect. Initiate a transaction from within the dApp and sign it from the wallet. Confirm the successful transaction. Optionally provide screenshots or a video recording.",
+   "primary": true
+  },
+  {
+   "id": "registry_preapprovals",
+   "name": "Pre-approvals for DA Registry issued assets",
+   "category": "App Specific",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Register pre-approvals for a DA Registry issued asset. Send the asset to the wallet address. Confirm the asset was auto-accepted. Record the transaction update IDs and optionally provide screenshots of the holding, transfer, and party ID.",
+   "primary": false
+  },
+  {
+   "id": "wallet_gateway_signing_driver",
+   "name": "Wallet Gateway signing driver",
+   "category": "App Specific",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Integrate with the Wallet Gateway signing driver and demonstrate a signed transaction routed through it. Link to the signing driver. Record the transaction update ID and the Wallet Gateway request/session ID, and optinoally provide a screenshot or log excerpt showing the driver handling the signing request.",
+   "primary": false
+  },
+  {
+   "id": "key_generation_method",
+   "name": "Key generation method",
+   "category": "Party Specific",
+   "type": "freetext",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "key_recovery",
+   "name": "Key recovery",
+   "category": "Party Specific",
+   "type": "boolean",
+   "self_attested_only": true,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "social_recovery",
+   "name": "Social recovery",
+   "category": "Party Specific",
+   "type": "boolean",
+   "self_attested_only": true,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "multi_address",
+   "name": "Multi-address / account",
+   "category": "Party Specific",
+   "type": "boolean",
+   "self_attested_only": true,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "distributed_parties",
+   "name": "Distributed parties",
+   "category": "Party Specific",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "utxo_merge_delegation",
+   "name": "UTXO merge delegation contract enabled",
+   "category": "Network Relevant Features",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Enable the merge delegation contract in the wallet. Witness a UTXO consolidation contract on-chain for CC (sender & receiver are the same party).",
+   "primary": false
+  },
+  {
+   "id": "validator_hosting_byov",
+   "name": "Bring-Your-Own-Validator (BYOV)",
+   "category": "Validator Hosting",
+   "type": "boolean",
+   "self_attested_only": true,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "validator_hosting_private",
+   "name": "Private validator",
+   "category": "Validator Hosting",
+   "type": "boolean",
+   "self_attested_only": true,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "validator_hosting_shared",
+   "name": "Shared validator",
+   "category": "Validator Hosting",
+   "type": "boolean",
+   "self_attested_only": true,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "policy_workflows",
+   "name": "Policy workflows",
+   "category": "Transaction Signing",
+   "type": "boolean",
+   "self_attested_only": true,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "threshold_signature_scheme",
+   "name": "Threshold Signature Scheme",
+   "category": "Transaction Signing",
+   "type": "boolean",
+   "self_attested_only": true,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "hardware_wallet_support",
+   "name": "Hardware wallet support",
+   "category": "Transaction Signing",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "compliance",
+   "name": "Compliance",
+   "category": "Wallet Capabilities",
+   "type": "freetext",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "tokenization",
+   "name": "Tokenization",
+   "category": "Wallet Capabilities",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "reward_minting",
+   "name": "Reward minting",
+   "category": "Wallet Capabilities",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Demonstrate the wallet claiming or minting a reward (e.g., a validator or app reward). Provide the transaction update ID of the reward-minting event and a screenshot of the resulting holding.",
+   "primary": false
+  },
+  {
+   "id": "transfer_proof",
+   "name": "Transfer object / proof of transfer support",
+   "category": "Wallet Capabilities",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Generate a transfer/proof-of-transfer object for a completed transaction. Provide the transaction update ID and a screenshot or export of the proof object.",
+   "primary": false
+  },
+  {
+   "id": "clear_signing",
+   "name": "Clear signing",
+   "category": "Wallet Capabilities",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Show the wallet displaying human-readable transaction details (not raw hex/opaque data) before signing. Provide a screenshot of the clear-signing confirmation screen for a real transaction, alongside its transaction update ID.",
+   "primary": false
+  },
+  {
+   "id": "integrated_swaps",
+   "name": "Integrated swaps",
+   "category": "Wallet Capabilities",
+   "type": "boolean",
+   "self_attested_only": false,
+   "suggested_test": "Perform an in-wallet swap between two assets. Provide the transaction update ID(s) for the swap and a screenshot of balances before and after.",
+   "primary": false
+  },
+  {
+   "id": "assets_supported",
+   "name": "Assets supported",
+   "category": "Wallet Capabilities",
+   "type": "freetext",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": false
+  },
+  {
+   "id": "languages_supported",
+   "name": "Languages supported",
+   "category": "Wallet Capabilities",
+   "type": "freetext",
+   "self_attested_only": false,
+   "suggested_test": null,
+   "primary": false
+  }
+ ],
+ "wallets": [
+  {
+   "slug": "dfns",
+   "name": "Dfns",
+   "website": "https://www.dfns.co",
+   "contact": "contact@dfns.co",
+   "added": "2026-07-24",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/dfns.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Enterprise"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Browser"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "Self-hosted",
+      "SaaS",
+      "Hybrid"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/dfns/dfns-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "none"
+    },
+    "preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/dfns/dfns-self-attestation.md#pre-approvals-for-cc-preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/dfns/dfns-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "none"
+    },
+    "cip_112_v2": {
+     "status": "none"
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/dfns/dfns-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "none"
+    },
+    "walletconnect_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/dfns/dfns-self-attestation.md#wallet-connect-support-walletconnect_support",
+     "verified": [],
+     "disputed": []
+    },
+    "registry_preapprovals": {
+     "status": "unsupported",
+     "reason": "Not supported yet"
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/dfns/dfns-self-attestation.md#wallet-gateway-signing-driver-wallet_gateway_signing_driver",
+     "verified": [],
+     "disputed": []
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "MPC/TSS -- keys generated as distributed shares across Dfns's signing network -- or HSM-based key generation; no seed phrases"
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "none"
+    },
+    "multi_address": {
+     "status": "attested"
+    },
+    "distributed_parties": {
+     "status": "none"
+    },
+    "utxo_merge_delegation": {
+     "status": "none"
+    },
+    "validator_hosting_byov": {
+     "status": "attested"
+    },
+    "validator_hosting_private": {
+     "status": "none"
+    },
+    "validator_hosting_shared": {
+     "status": "none"
+    },
+    "policy_workflows": {
+     "status": "attested"
+    },
+    "threshold_signature_scheme": {
+     "status": "attested"
+    },
+    "hardware_wallet_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/dfns/dfns-self-attestation.md#hardware-wallet-support-hardware_wallet_support",
+     "verified": [],
+     "disputed": []
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "none"
+    },
+    "reward_minting": {
+     "status": "none"
+    },
+    "transfer_proof": {
+     "status": "none"
+    },
+    "clear_signing": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/dfns/dfns-self-attestation.md#clear-signing-clear_signing",
+     "verified": [],
+     "disputed": []
+    },
+    "integrated_swaps": {
+     "status": "none"
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "CC",
+      "Other CIP-0056 tokens on demand (token issuer provides an RPC node)"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 13,
+    "proof": 8,
+    "unsupported": 1,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "send",
+   "name": "Send",
+   "website": "https://cantonwallet.com",
+   "contact": "peter@send.it",
+   "added": "2026-07-24",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/send.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail",
+      "Enterprise"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Browser",
+      "Mobile",
+      "Browser-extension"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "SaaS"
+     ]
+    },
+    "cc_support": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "none"
+    },
+    "preapprovals": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "cip_112_v2": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "memo_tag_support": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "walletconnect_support": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "registry_preapprovals": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "none"
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "Passkey-based (WebAuthn) key generation on the user's device; no seed phrases"
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "none"
+    },
+    "multi_address": {
+     "status": "attested"
+    },
+    "distributed_parties": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "utxo_merge_delegation": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "validator_hosting_byov": {
+     "status": "none"
+    },
+    "validator_hosting_private": {
+     "status": "attested"
+    },
+    "validator_hosting_shared": {
+     "status": "attested"
+    },
+    "policy_workflows": {
+     "status": "attested"
+    },
+    "threshold_signature_scheme": {
+     "status": "attested"
+    },
+    "hardware_wallet_support": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "reward_minting": {
+     "status": "none"
+    },
+    "transfer_proof": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "clear_signing": {
+     "status": "none"
+    },
+    "integrated_swaps": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "CC",
+      "CIP-0056 tokens"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 21,
+    "proof": 0,
+    "unsupported": 0,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "askardex-wallet",
+   "name": "Askardex Wallet",
+   "website": "https://wallet.askardex.com",
+   "contact": "irpan@askardex.com",
+   "added": "2026-07-25",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/askardex-wallet.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Mobile"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "SaaS"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/askardex-wallet/askardex-wallet-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "none"
+    },
+    "preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/askardex-wallet/askardex-wallet-self-attestation.md#pre-approvals-for-cc-preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/askardex-wallet/askardex-wallet-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "none"
+    },
+    "cip_112_v2": {
+     "status": "none"
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/askardex-wallet/askardex-wallet-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/askardex-wallet/askardex-wallet-self-attestation.md#cip-0103-dapp-api-support-cip_0103_dapp_api",
+     "verified": [],
+     "disputed": []
+    },
+    "walletconnect_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/askardex-wallet/askardex-wallet-self-attestation.md#wallet-connect-support-walletconnect_support",
+     "verified": [],
+     "disputed": []
+    },
+    "registry_preapprovals": {
+     "status": "none"
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "none"
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "Seed phrase (BIP-39 mnemonic, 24 words)"
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "none"
+    },
+    "multi_address": {
+     "status": "none"
+    },
+    "distributed_parties": {
+     "status": "none"
+    },
+    "utxo_merge_delegation": {
+     "status": "none"
+    },
+    "validator_hosting_byov": {
+     "status": "none"
+    },
+    "validator_hosting_private": {
+     "status": "none"
+    },
+    "validator_hosting_shared": {
+     "status": "none"
+    },
+    "policy_workflows": {
+     "status": "none"
+    },
+    "threshold_signature_scheme": {
+     "status": "none"
+    },
+    "hardware_wallet_support": {
+     "status": "none"
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "none"
+    },
+    "reward_minting": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/askardex-wallet/askardex-wallet-self-attestation.md#reward-minting-reward_minting",
+     "verified": [],
+     "disputed": []
+    },
+    "transfer_proof": {
+     "status": "none"
+    },
+    "clear_signing": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/askardex-wallet/askardex-wallet-self-attestation.md#clear-signing-clear_signing",
+     "verified": [],
+     "disputed": []
+    },
+    "integrated_swaps": {
+     "status": "unsupported",
+     "reason": "In-wallet swap (DEX) is implemented and available in production but currently behind a coming-soon gate pending liquidity bootstrap."
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "CC",
+      "USDCx (CIP-0056)",
+      "CBTC (CIP-0056)",
+      "CETH (CIP-0056)",
+      "HANDL (CIP-0056)"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 9,
+    "proof": 8,
+    "unsupported": 1,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "walley",
+   "name": "Walley",
+   "website": "https://walley.cc",
+   "contact": "admin@k2flabs.com",
+   "added": "2026-07-27",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/walley.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Browser"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "SaaS"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "none"
+    },
+    "preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#pre-approvals-for-cc-preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#cip-0056-token-standard-allocation-support-cip_0056_allocation",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_112_v2": {
+     "status": "unsupported",
+     "reason": "Walley implements the v1 token standard interfaces only. CIP-112 v2 is not implemented yet."
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#cip-0103-dapp-api-support-cip_0103_dapp_api",
+     "verified": [],
+     "disputed": []
+    },
+    "walletconnect_support": {
+     "status": "unsupported",
+     "reason": "dApps connect to Walley through the CIP-0103 provider adapter. WalletConnect is used only to attach an external Ethereum wallet for USDCx bridging, never for dApp sessions with Walley."
+    },
+    "registry_preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#pre-approvals-for-da-registry-issued-assets-registry_preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "unsupported",
+     "reason": "Not integrated. Walley signs in the browser with its own passkey-derived key."
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "WebAuthn passkey PRF secret, expanded with HKDF-SHA512 into an Ed25519 signing key that is generated and held in the browser. A 24-word BIP-39 phrase backs up the same secret."
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "unsupported",
+     "reason": "Recovery is by 24-word BIP-39 phrase. There is no guardian or trusted-contact scheme."
+    },
+    "multi_address": {
+     "status": "unsupported",
+     "reason": "One party per passkey credential."
+    },
+    "distributed_parties": {
+     "status": "unsupported",
+     "reason": "Each party has a single signing key. Distributed party authority is not offered."
+    },
+    "utxo_merge_delegation": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#utxo-merge-delegation-contract-enabled-utxo_merge_delegation",
+     "verified": [],
+     "disputed": []
+    },
+    "validator_hosting_byov": {
+     "status": "unsupported",
+     "reason": "Bring-your-own-validator is not offered. Walley hosts every user party on its own validator."
+    },
+    "validator_hosting_private": {
+     "status": "none"
+    },
+    "validator_hosting_shared": {
+     "status": "none"
+    },
+    "policy_workflows": {
+     "status": "unsupported",
+     "reason": "Every transaction is approved individually by the key holder. There are no configurable approval policies."
+    },
+    "threshold_signature_scheme": {
+     "status": "unsupported",
+     "reason": "Single Ed25519 key per party. No MPC or threshold signing."
+    },
+    "hardware_wallet_support": {
+     "status": "unsupported",
+     "reason": "Signing uses a WebAuthn passkey with the PRF extension rather than a dedicated hardware signing device."
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "none"
+    },
+    "reward_minting": {
+     "status": "unsupported",
+     "reason": "Walley does not claim or mint validator or app rewards on behalf of users."
+    },
+    "transfer_proof": {
+     "status": "unsupported",
+     "reason": "Transaction history is viewable in the app, but Walley does not export a proof-of-transfer object."
+    },
+    "clear_signing": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#clear-signing-clear_signing",
+     "verified": [],
+     "disputed": []
+    },
+    "integrated_swaps": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/walley/walley-self-attestation.md#integrated-swaps-integrated_swaps",
+     "verified": [],
+     "disputed": []
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "CC",
+      "USDCx",
+      "CBTC",
+      "cETH",
+      "SBC",
+      "raUSD",
+      "HANDL",
+      "EDELx",
+      "USDM1",
+      "TRKX index tokens",
+      "Tradecraft LP tokens",
+      "any CIP-0056 token in the Walley registry (79 live at api.walley.cc/v1/tokens)"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 11,
+    "proof": 10,
+    "unsupported": 12,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "blockdaemon-institutional-vault",
+   "name": "Blockdaemon Institutional Vault",
+   "website": "https://www.blockdaemon.com/mpc-wallets-and-vaults/institutional-vault",
+   "contact": "support@blockdaemon.com",
+   "added": "2026-08-05",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/blockdaemon-institutional-vault.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Enterprise"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Browser",
+      "Desktop",
+      "Mobile"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "SaaS",
+      "Hybrid",
+      "On-prem"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#two-step-cc-transfers-two_step_cc_transfers",
+     "verified": [],
+     "disputed": []
+    },
+    "preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#pre-approvals-for-cc-preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#cip-0056-token-standard-allocation-support-cip_0056_allocation",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_112_v2": {
+     "status": "none"
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "none"
+    },
+    "walletconnect_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#wallet-connect-support-walletconnect_support",
+     "verified": [],
+     "disputed": []
+    },
+    "registry_preapprovals": {
+     "status": "none"
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#wallet-gateway-signing-driver-wallet_gateway_signing_driver",
+     "verified": [],
+     "disputed": []
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "MPC/TSS Distributed Key Generation (Ed25519)"
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "none"
+    },
+    "multi_address": {
+     "status": "attested"
+    },
+    "distributed_parties": {
+     "status": "none"
+    },
+    "utxo_merge_delegation": {
+     "status": "none"
+    },
+    "validator_hosting_byov": {
+     "status": "attested"
+    },
+    "validator_hosting_private": {
+     "status": "attested"
+    },
+    "validator_hosting_shared": {
+     "status": "attested"
+    },
+    "policy_workflows": {
+     "status": "attested"
+    },
+    "threshold_signature_scheme": {
+     "status": "attested"
+    },
+    "hardware_wallet_support": {
+     "status": "none"
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#tokenization-tokenization",
+     "verified": [],
+     "disputed": []
+    },
+    "reward_minting": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#reward-minting-reward_minting",
+     "verified": [],
+     "disputed": []
+    },
+    "transfer_proof": {
+     "status": "none"
+    },
+    "clear_signing": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/blockdaemon-institutional-vault/blockdaemon-institutional-vault-self-attestation.md#clear-signing-clear_signing",
+     "verified": [],
+     "disputed": []
+    },
+    "integrated_swaps": {
+     "status": "none"
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "CC",
+      "CIP-0056 utility tokens (DA Utilities and DTCC registry backends)"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 18,
+    "proof": 11,
+    "unsupported": 0,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "nightly",
+   "name": "Nightly",
+   "website": "https://nightly.app/wallet/canton",
+   "contact": "hello@nightly.app",
+   "added": "2026-08-11",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/nightly.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Mobile",
+      "Browser-extension"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "SaaS"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/nightly/nightly-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/nightly/nightly-self-attestation.md#two-step-cc-transfers-two_step_cc_transfers",
+     "verified": [],
+     "disputed": []
+    },
+    "preapprovals": {
+     "status": "none"
+    },
+    "cip_0056_transfer": {
+     "status": "none"
+    },
+    "cip_0056_allocation": {
+     "status": "none"
+    },
+    "cip_112_v2": {
+     "status": "none"
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/nightly/nightly-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/nightly/nightly-self-attestation.md#cip-0103-dapp-api-support-cip_0103_dapp_api",
+     "verified": [],
+     "disputed": []
+    },
+    "walletconnect_support": {
+     "status": "none"
+    },
+    "registry_preapprovals": {
+     "status": "none"
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "none"
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": []
+    },
+    "key_recovery": {
+     "status": "none"
+    },
+    "social_recovery": {
+     "status": "none"
+    },
+    "multi_address": {
+     "status": "none"
+    },
+    "distributed_parties": {
+     "status": "none"
+    },
+    "utxo_merge_delegation": {
+     "status": "none"
+    },
+    "validator_hosting_byov": {
+     "status": "none"
+    },
+    "validator_hosting_private": {
+     "status": "none"
+    },
+    "validator_hosting_shared": {
+     "status": "none"
+    },
+    "policy_workflows": {
+     "status": "none"
+    },
+    "threshold_signature_scheme": {
+     "status": "none"
+    },
+    "hardware_wallet_support": {
+     "status": "none"
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "none"
+    },
+    "reward_minting": {
+     "status": "none"
+    },
+    "transfer_proof": {
+     "status": "none"
+    },
+    "clear_signing": {
+     "status": "none"
+    },
+    "integrated_swaps": {
+     "status": "none"
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": []
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": []
+    }
+   },
+   "counts": {
+    "claimed": 4,
+    "proof": 4,
+    "unsupported": 0,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "metatarz",
+   "name": "Metatarz",
+   "website": "https://wallet.metatarz.xyz",
+   "contact": "support@metatarz.xyz",
+   "added": "2026-08-13",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/metatarz.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail",
+      "Enterprise"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Browser-extension"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "Self-hosted",
+      "SaaS"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/metatarz/metatarz-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "none"
+    },
+    "preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/metatarz/metatarz-self-attestation.md#pre-approvals-for-cc-preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/metatarz/metatarz-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "none"
+    },
+    "cip_112_v2": {
+     "status": "none"
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/metatarz/metatarz-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/metatarz/metatarz-self-attestation.md#cip-0103-dapp-api-support-cip_0103_dapp_api",
+     "verified": [],
+     "disputed": []
+    },
+    "walletconnect_support": {
+     "status": "none"
+    },
+    "registry_preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/metatarz/metatarz-self-attestation.md#pre-approvals-for-da-registry-issued-assets-registry_preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "none"
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "Seed phrase (BIP-39)"
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "none"
+    },
+    "multi_address": {
+     "status": "attested"
+    },
+    "distributed_parties": {
+     "status": "none"
+    },
+    "utxo_merge_delegation": {
+     "status": "none"
+    },
+    "validator_hosting_byov": {
+     "status": "none"
+    },
+    "validator_hosting_private": {
+     "status": "attested"
+    },
+    "validator_hosting_shared": {
+     "status": "none"
+    },
+    "policy_workflows": {
+     "status": "none"
+    },
+    "threshold_signature_scheme": {
+     "status": "none"
+    },
+    "hardware_wallet_support": {
+     "status": "none"
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "none"
+    },
+    "reward_minting": {
+     "status": "none"
+    },
+    "transfer_proof": {
+     "status": "none"
+    },
+    "clear_signing": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/metatarz/metatarz-self-attestation.md#clear-signing-clear_signing",
+     "verified": [],
+     "disputed": []
+    },
+    "integrated_swaps": {
+     "status": "none"
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "CC",
+      "USDC (CIP-0056)",
+      "CBTC (CIP-0056)",
+      "CETH (CIP-0056)",
+      "HANDL (CIP-0056)"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 10,
+    "proof": 7,
+    "unsupported": 0,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "ledger-wallet",
+   "name": "Ledger Wallet",
+   "website": "https://www.ledger.com",
+   "contact": "livio.aitali@ledger.fr",
+   "added": "2026-08-17",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/ledger-wallet.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Hardware",
+      "Desktop",
+      "Mobile"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "Hybrid"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/ledger-wallet/ledger-wallet-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/ledger-wallet/ledger-wallet-self-attestation.md#two-step-cc-transfers-two_step_cc_transfers",
+     "verified": [],
+     "disputed": []
+    },
+    "preapprovals": {
+     "status": "unsupported",
+     "reason": "Implemented in the coin module but not enabled in the released Ledger Wallet; incoming Canton Coin is received via the two-step transfer flow."
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/ledger-wallet/ledger-wallet-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "unsupported",
+     "reason": "Transfers are supported; the CIP-0056 allocation flow is not yet implemented."
+    },
+    "cip_112_v2": {
+     "status": "none"
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/ledger-wallet/ledger-wallet-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "unsupported",
+     "reason": "dApp connectivity for Canton is not yet available in Ledger Wallet."
+    },
+    "walletconnect_support": {
+     "status": "unsupported",
+     "reason": "WalletConnect is not supported for Canton in Ledger Wallet."
+    },
+    "registry_preapprovals": {
+     "status": "none"
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "none"
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "BIP-39 seed phrase; SLIP-10 Ed25519 keys derived and held on the Ledger hardware device"
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "none"
+    },
+    "multi_address": {
+     "status": "attested"
+    },
+    "distributed_parties": {
+     "status": "none"
+    },
+    "utxo_merge_delegation": {
+     "status": "none"
+    },
+    "validator_hosting_byov": {
+     "status": "none"
+    },
+    "validator_hosting_private": {
+     "status": "none"
+    },
+    "validator_hosting_shared": {
+     "status": "none"
+    },
+    "policy_workflows": {
+     "status": "none"
+    },
+    "threshold_signature_scheme": {
+     "status": "none"
+    },
+    "hardware_wallet_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/ledger-wallet/ledger-wallet-self-attestation.md#hardware-wallet-support-hardware_wallet_support",
+     "verified": [],
+     "disputed": []
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "none"
+    },
+    "reward_minting": {
+     "status": "none"
+    },
+    "transfer_proof": {
+     "status": "none"
+    },
+    "clear_signing": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/ledger-wallet/ledger-wallet-self-attestation.md#clear-signing-clear_signing",
+     "verified": [],
+     "disputed": []
+    },
+    "integrated_swaps": {
+     "status": "none"
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "Canton Coin (CC)",
+      "CIP-0056 token instruments"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English",
+      "French",
+      "Spanish",
+      "German",
+      "Japanese",
+      "Korean",
+      "Portuguese (Brazil)",
+      "Russian",
+      "Turkish",
+      "Chinese (Simplified)",
+      "Thai"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 8,
+    "proof": 6,
+    "unsupported": 4,
+    "verified": 0,
+    "disputed": 0
+   }
+  }
+ ]
+}
