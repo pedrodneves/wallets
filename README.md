@@ -12,6 +12,8 @@ this repo only holds the site that displays it.
 
 Filters are kept in the URL, so any filtered view can be shared as a link.
 
+A **Light / Dark** button in the header switches theme. Dark is the default; the choice is remembered in the browser (`localStorage` key `wallets-theme`). Theme colours are the tokens in `:root` (dark) and `:root[data-theme="light"]` in `assets/styles.css`.
+
 ## Files
 
 ```
@@ -56,4 +58,4 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-After changing `styles.css` or `app.js`, bump the `?v=` number (currently 2) in the three HTML files so browsers fetch the new version.
+After changing `styles.css` or `app.js`, bump the `?v=` number (currently 3) in the three HTML files so browsers fetch the new version.

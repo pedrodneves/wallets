@@ -28,6 +28,8 @@
     check: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
     shield: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M7 1.5l4.5 1.8v3.4c0 2.8-2 4.8-4.5 5.8-2.5-1-4.5-3-4.5-5.8V3.3z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
     cross: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M3.5 3.5l7 7M10.5 3.5l-7 7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+    sun: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="8" cy="8" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M8 1v1.5M8 13.5V15M1 8h1.5M13.5 8H15M3 3l1 1M12 12l1 1M3 13l1-1M12 4l1-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
+    moon: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M13.5 9.5A5.5 5.5 0 016.5 2.5a5.5 5.5 0 107 7z" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></svg>',
     search: '<svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><circle cx="7" cy="7" r="5" stroke="currentColor" stroke-width="1.5"/><path d="M11 11l3 3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>',
     github: '<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>',
   };
@@ -106,8 +108,43 @@
           ${link("matrix.html", "Feature matrix", "matrix")}
           ${link("index.html#how", "How listing works", "how")}
           <a href="${REPO}" target="_blank" rel="noopener">${ICON.github}GitHub</a>
+          <button type="button" class="theme-toggle" id="theme-toggle"></button>
         </nav>
       </div>`;
+  }
+
+  // ---- Light / dark theme ----------------------------------------------
+  // The current theme lives on <html data-theme="…">. A tiny script in each
+  // page's <head> sets it before anything is drawn (no flash of the wrong
+  // theme); these functions handle the toggle button afterwards.
+
+  const THEME_KEY = "wallets-theme";   // localStorage key for the choice
+
+  // "light" or "dark", whichever is active right now.
+  function currentTheme() {
+    return document.documentElement.dataset.theme === "light" ? "light" : "dark";
+  }
+
+  // Make the button show the theme you would switch TO.
+  function paintThemeButton() {
+    const btn = document.getElementById("theme-toggle");
+    if (!btn) return;
+    const next = currentTheme() === "light" ? "dark" : "light";
+    btn.innerHTML = next === "light" ? `${ICON.sun}Light` : `${ICON.moon}Dark`;
+    btn.setAttribute("aria-label", `Switch to ${next} theme`);
+  }
+
+  // Flip the theme, remember it, update the button.
+  function toggleTheme() {
+    const next = currentTheme() === "light" ? "dark" : "light";
+    document.documentElement.dataset.theme = next;
+    try { localStorage.setItem(THEME_KEY, next); } catch (e) { /* private mode: still works for this visit */ }
+    paintThemeButton();
+  }
+
+  function setupThemeToggle() {
+    paintThemeButton();
+    document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
   }
 
   function renderFooter(data) {
@@ -571,7 +608,7 @@
           <div><b style="color: var(--green)">${w.counts.claimed}</b><span>Features attested</span></div>
           <div><b>${w.counts.proof}</b><span>Linked to evidence</span></div>
           <div><b style="color: var(--purple-text)">${w.counts.verified}</b><span>Third-party verified</span></div>
-          <div><b style="color: #c8c8da">${w.counts.unsupported}</b><span>Declared not supported</span></div>
+          <div><b style="color: var(--chip-text)">${w.counts.unsupported}</b><span>Declared not supported</span></div>
         </div>
 
         <div class="profile-body">
@@ -617,6 +654,7 @@
     const page = document.body.dataset.page;
     const root = document.getElementById("main");
     renderHeader(page);
+    setupThemeToggle();
     try {
       const data = await loadData();
       renderFooter(data);
