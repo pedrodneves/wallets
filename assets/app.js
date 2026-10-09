@@ -142,6 +142,15 @@
     paintThemeButton();
   }
 
+  // Store the sticky site header's height in --header-h, so the matrix's
+  // sticky column headers sit just below it instead of hiding behind it.
+  function trackHeaderHeight() {
+    const header = document.getElementById("site-header");
+    const set = () => document.documentElement.style.setProperty("--header-h", header.offsetHeight + "px");
+    set();
+    window.addEventListener("resize", set);
+  }
+
   function setupThemeToggle() {
     paintThemeButton();
     document.getElementById("theme-toggle").addEventListener("click", toggleTheme);
@@ -160,6 +169,69 @@
           <a href="https://canton.foundation" target="_blank" rel="noopener">canton.foundation</a>
         </nav>
       </div>`;
+  }
+
+  // ---- "Back to directory" link (matrix + wallet pages) -------------------
+  // Renders a plain link to index.html. If the visitor actually came from the
+  // directory on this site, clicking goes *back* in history instead, so their
+  // filters and scroll position are still there.
+  function backLink() {
+    return `<a class="back-link" href="index.html" id="back-link">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M10 3L5 8l5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Back to directory</a>`;
+  }
+
+  function wireBackLink(root) {
+    const link = root.querySelector("#back-link");
+    if (!link) return;
+    link.addEventListener("click", (e) => {
+      let ref = null;
+      try { ref = new URL(document.referrer); } catch (err) { /* no referrer */ }
+      const cameFromDirectory = ref && ref.origin === location.origin &&
+        /(\/|\/index\.html)$/.test(ref.pathname) && history.length > 1;
+      if (cameFromDirectory) { e.preventDefault(); history.back(); }
+    });
+  }
+
+  // ---- Floating tooltip for "Not supported" reasons -----------------------
+  // One tooltip element for the whole page, placed with position: fixed so
+  // it is never clipped by the table and always stays inside the window.
+  function setupReasonTooltip(root) {
+    const tip = document.createElement("div");
+    tip.className = "reason-tip";
+    tip.setAttribute("role", "tooltip");
+    tip.id = "reason-tip";
+    tip.hidden = true;
+    document.body.appendChild(tip);
+
+    // Show the tooltip under (or above, if there's no room) the link.
+    function show(el) {
+      tip.innerHTML = `<strong>${esc(el.dataset.wallet)} · not supported</strong>${esc(el.dataset.reason)}<span>Click to open on the wallet's page</span>`;
+      tip.hidden = false;
+      const r = el.getBoundingClientRect();
+      const w = tip.offsetWidth, h = tip.offsetHeight, gap = 8;
+      let left = r.left + r.width / 2 - w / 2;
+      left = Math.max(8, Math.min(left, window.innerWidth - w - 8));   // keep on screen
+      let top = r.bottom + gap;
+      if (top + h > window.innerHeight - 8) top = r.top - h - gap;    // flip above
+      tip.style.left = left + "px";
+      tip.style.top = top + "px";
+      el.setAttribute("aria-describedby", "reason-tip");
+    }
+    function hide() { tip.hidden = true; }
+
+    // Event delegation: works for cells redrawn by later filter changes.
+    root.addEventListener("mouseover", (e) => { const el = e.target.closest("[data-reason]"); if (el) show(el); });
+    // Hide only when the pointer really leaves the link (moving onto a
+    // child element inside the link also fires mouseout).
+    root.addEventListener("mouseout", (e) => {
+      const el = e.target.closest("[data-reason]");
+      if (el && !el.contains(e.relatedTarget)) hide();
+    });
+    root.addEventListener("focusin", (e) => { const el = e.target.closest("[data-reason]"); if (el) show(el); });
+    root.addEventListener("focusout", hide);
+    window.addEventListener("scroll", hide, { passive: true });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") hide(); });
   }
 
   // ---- Data loading -------------------------------------------------------
@@ -297,7 +369,10 @@
       const keys = KEY_FEATURES.map(([id, label]) => {
         const c = w.features[id] || { status: "none" };
         let status = '<span class="st-none">No claim</span>';
-        if (isYes(c)) status = `<span class="st-yes">${ICON.check}Attested</span>`;
+        // Say exactly what kind of "yes" it is: a third-party confirmation
+        // outranks the provider's own claim.
+        if (isYes(c) && (c.verified || []).length) status = `<span class="st-verified">${ICON.shield}Verified</span>`;
+        else if (isYes(c)) status = `<span class="st-yes">${ICON.check}Self-attested</span>`;
         else if (c.status === "unsupported") status = '<span class="st-no">Not supported</span>';
         return `<li><span>${label}</span>${status}</li>`;
       }).join("");
@@ -389,7 +464,10 @@
     } else if (c.status === "attested") {
       html += `<span class="badge badge--attested" title="Self-attested, no evidence linked" role="img" aria-label="${esc(who)}: self-attested, no evidence linked">${ICON.check}</span>`;
     } else if (c.status === "unsupported") {
-      return `<a class="unsup" href="${safeUrl(w.source_url)}" target="_blank" rel="noopener" title="${esc(c.reason)}">Not supported</a>`;
+      // Hover/focus shows the reason (see setupReasonTooltip); click opens
+      // the wallet's page scrolled to this feature, where the reason is shown.
+      const href = `wallet.html?id=${encodeURIComponent(w.slug)}#f-${encodeURIComponent(f.id)}`;
+      return `<a class="unsup" href="${href}" data-reason="${esc(c.reason)}" data-wallet="${esc(w.name)}">Not supported<span class="sr-only">. Reason: ${esc(c.reason)}</span></a>`;
     } else {
       return `<span class="nil" role="img" aria-label="${esc(who)}: no claim">—</span>`;
     }
@@ -414,6 +492,7 @@
 
     root.innerHTML = `
       <div class="wrap wrap--wide">
+        ${backLink()}
         <div class="page-head">
           <div>
             <h1>Feature matrix</h1>
@@ -441,7 +520,7 @@
           <span><span class="unsup">Not supported</span>Wallet says no, with a reason</span>
           <span><span class="nil">—</span>No claim either way</span>
         </div>
-        <div class="table-box" tabindex="0" aria-label="Feature matrix, scrolls sideways"><table class="matrix" id="matrix"></table></div>
+        <div class="table-box" id="table-box"><table class="matrix" id="matrix"></table></div>
         <p class="note">Built from <code>wallets/*.yaml</code> and <code>wallets/_feature_registry.yaml</code>. The same data as <a href="${REPO}/blob/main/WALLET_DIRECTORY.md" target="_blank" rel="noopener">WALLET_DIRECTORY.md</a>.</p>
       </div>`;
 
@@ -506,8 +585,23 @@
       if (!cols.length) html = `<tbody><tr><th scope="row" style="padding: 30px 20px; color: var(--text-2)">No wallets match. Choose "All wallets".</th></tr>`;
       $table.innerHTML = html + "</tbody>";
 
+      fitTable();
       setParams({ view: state.view === "all" ? "all" : "", diff: state.diff, type: state.type === "all" ? "" : state.type, w: state.pick });
     }
+
+    // Only when the table is wider than the page (small screens) does the box
+    // become a horizontal scroller. Otherwise it stays a normal block, so the
+    // browser window is the one and only vertical scrollbar, and the header
+    // row sticks to the top of the window.
+    const $box = root.querySelector("#table-box");
+    function fitTable() {
+      $box.classList.remove("is-scroll");
+      const tooWide = $table.scrollWidth > $box.clientWidth + 1;
+      $box.classList.toggle("is-scroll", tooWide);
+      if (tooWide) { $box.tabIndex = 0; $box.setAttribute("aria-label", "Feature matrix, scrolls sideways"); }
+      else { $box.removeAttribute("tabindex"); $box.removeAttribute("aria-label"); }
+    }
+    window.addEventListener("resize", fitTable);
 
     // Controls.
     root.querySelector("#seg-view").addEventListener("click", (e) => { const b = e.target.closest("button"); if (b) { state.view = b.dataset.view; draw(); } });
@@ -515,6 +609,8 @@
     root.querySelector("#diff").addEventListener("click", () => { state.diff = !state.diff; draw(); });
     root.querySelector("#pick-note").addEventListener("click", (e) => { if (e.target.id === "show-all") { state.pick = []; draw(); } });
 
+    wireBackLink(root);
+    setupReasonTooltip(root);
     draw();
   }
 
@@ -573,7 +669,8 @@
       if (isYes(c) && !f.self_attested_only) links.push(`<a href="${CONTRIBUTING}#third-party-verification" target="_blank" rel="noopener" style="color: var(--muted)">Verify this claim</a>`);
       if (f.self_attested_only && isYes(c)) links.push('<span style="color: var(--muted)">General capability, self-attested only</span>');
 
-      return `<div class="feature-row">
+      // id="f-<feature>" lets the matrix link straight to this row.
+      return `<div class="feature-row" id="f-${esc(f.id)}">
         <div class="feature-top">
           <div><div class="name">${esc(f.name)}</div><div class="fid">${esc(f.id)}</div></div>
           <div class="pills">${pills.join("")}</div>
@@ -588,7 +685,7 @@
 
     root.innerHTML = `
       <div class="wrap">
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Directory</a><span>/</span>${esc(w.name)}</nav>
+        ${backLink()}
         <div class="profile-head">
           <div class="profile-id">
             <div class="mono-tile" aria-hidden="true">${esc(initials(w.name))}</div>
@@ -640,6 +737,19 @@
         </div>
       </div>`;
 
+    wireBackLink(root);
+
+    // Arrived from a "Not supported" link (wallet.html?id=x#f-feature)? The
+    // rows are drawn after the page loads, so the browser can't jump there by
+    // itself: scroll to the row and highlight it.
+    if (location.hash.startsWith("#f-")) {
+      const target = document.getElementById(decodeURIComponent(location.hash.slice(1)));
+      if (target) {
+        target.classList.add("is-target");
+        target.scrollIntoView({ block: "center" });
+      }
+    }
+
     // Compare form: send both slugs to the matrix as ?w=a,b
     const $sel = root.querySelector("#compare");
     const $w = root.querySelector("#compare-w");
@@ -655,6 +765,7 @@
     const root = document.getElementById("main");
     renderHeader(page);
     setupThemeToggle();
+    trackHeaderHeight();
     try {
       const data = await loadData();
       renderFooter(data);

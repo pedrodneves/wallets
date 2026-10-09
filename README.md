@@ -58,4 +58,4 @@ python3 -m http.server 8000
 # open http://localhost:8000
 ```
 
-After changing `styles.css` or `app.js`, bump the `?v=` number (currently 3) in the three HTML files so browsers fetch the new version.
+After changing `styles.css` or `app.js`, bump the `?v=` number (currently 4) in the three HTML files so browsers fetch the new version.
