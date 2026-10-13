@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Wallet — Canton Wallet Directory</title>
   <meta name="description" content="A Canton Network wallet's listing, claims and evidence.">
-  <meta name="theme-color" content="#03030a" media="(prefers-color-scheme: dark)">
-  <meta name="theme-color" content="#f6f6fa" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#090410" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#fdfcfc" media="(prefers-color-scheme: light)">
   <!-- Canton "C" favicon, same file as sv-cal.canton.foundation -->
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/favicon.png">
-  <!-- Inter + JetBrains Mono, same fonts as the SV Calendar site -->
+  <!-- IBM Plex Sans (Canton body font), IBM Plex Mono, and Krona One for wide display headings -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Krona+One&display=swap" rel="stylesheet">
   <!-- Apply the saved theme before the page paints (dark is the default) -->
   <script>
     try { if (localStorage.getItem("wallets-theme") === "light") document.documentElement.dataset.theme = "light"; } catch (e) {}
   </script>
   <!-- Bump ?v= when styles.css or app.js change, to bust browser caches -->
-  <link rel="stylesheet" href="assets/styles.css?v=4">
+  <link rel="stylesheet" href="assets/styles.css?v=5">
 </head>
 <body data-page="wallet">
   <a class="skip" href="#main">Skip to content</a>
@@ -28,6 +28,6 @@
   <main id="main"><div class="wrap state-msg">Loading wallet data…</div></main>
   <footer class="site-footer" id="site-footer"></footer>
   <noscript><div class="wrap state-msg">This site needs JavaScript. The same data is in <a href="https://github.com/canton-foundation/wallets/blob/main/WALLET_DIRECTORY.md">WALLET_DIRECTORY.md</a>.</div></noscript>
-  <script src="assets/app.js?v=4"></script>
+  <script src="assets/app.js?v=5"></script>
 </body>
 </html>

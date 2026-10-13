@@ -283,7 +283,7 @@
         <p>Each listing is a provider's self-attestation against the feature registry, linked to public proof and open to independent verification by anyone in the ecosystem.</p>
         <div class="hero-actions">
           <a class="btn btn--primary" href="matrix.html">Compare all features</a>
-          <a class="btn" href="${CONTRIBUTING}#applying-as-a-new-wallet-provider" target="_blank" rel="noopener">List your wallet</a>
+          <a class="btn btn--accent" href="${CONTRIBUTING}#applying-as-a-new-wallet-provider" target="_blank" rel="noopener">+ List your wallet</a>
         </div>
         <div class="stats">
           <div class="stat"><b>${wallets.length}</b><span>Wallets listed</span></div>
