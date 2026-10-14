@@ -29,7 +29,7 @@
   // the whole tile. Wallets not listed here keep the two-letter monogram.
   const LOGOS = {
     "dfns": { src: "dfns.svg", onLight: "dfns-on-light.svg" },
-    "send": { src: "send.svg", onLight: "send-on-light.svg" },
+    "send": { src: "send.svg", fill: true },
     "askardex-wallet": { src: "askardex-wallet.png", fill: true },
     "walley": { src: "walley.svg", onLight: "walley-on-light.svg" },
     "blockdaemon-institutional-vault": { src: "blockdaemon-institutional-vault.svg", onLight: "blockdaemon-institutional-vault-on-light.svg" },
