@@ -23,6 +23,21 @@
     ["walletconnect_support", "WalletConnect"],
   ];
 
+  // Wallet logos in assets/logos/, keyed by listing slug (sources are in the
+  // README). "onLight" is a second file for the light theme, for marks that
+  // are too pale to see there; "fill" logos are complete app icons that cover
+  // the whole tile. Wallets not listed here keep the two-letter monogram.
+  const LOGOS = {
+    "dfns": { src: "dfns.svg", onLight: "dfns-on-light.svg" },
+    "send": { src: "send.svg", onLight: "send-on-light.svg" },
+    "askardex-wallet": { src: "askardex-wallet.png", fill: true },
+    "walley": { src: "walley.svg", onLight: "walley-on-light.svg" },
+    "blockdaemon-institutional-vault": { src: "blockdaemon-institutional-vault.svg", onLight: "blockdaemon-institutional-vault-on-light.svg" },
+    "nightly": { src: "nightly.svg", fill: true },
+    "metatarz": { src: "metatarz.png", fill: true },
+    "ledger-wallet": { src: "ledger-wallet.svg", onLight: "ledger-wallet-on-light.svg" },
+  };
+
   // Inline SVG icons (stroke uses currentColor so CSS sets the colour).
   const ICON = {
     check: '<svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true"><path d="M2.5 7.5l3 3 6-7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
@@ -54,6 +69,17 @@
     const words = String(name).split(/\s+/).filter(Boolean);
     if (words.length > 1) return (words[0][0] + words[1][0]).toUpperCase();
     return (name.slice(0, 1).toUpperCase() + name.slice(1, 2).toLowerCase());
+  }
+
+  // The square tile beside a wallet's name: its logo if LOGOS has one,
+  // otherwise its initials. Hidden from screen readers because the name is
+  // always printed right next to it.
+  function tile(w) {
+    const logo = LOGOS[w.slug];
+    if (!logo) return `<span class="mono-tile" aria-hidden="true">${esc(initials(w.name))}</span>`;
+    let imgs = `<img src="assets/logos/${logo.src}" alt=""${logo.onLight ? ' class="on-dark"' : ""}>`;
+    if (logo.onLight) imgs += `<img src="assets/logos/${logo.onLight}" alt="" class="on-light">`;
+    return `<span class="mono-tile${logo.fill ? " mono-tile--fill" : ""}" aria-hidden="true">${imgs}</span>`;
   }
 
   // "https://www.dfns.co/path" -> "dfns.co"
@@ -379,7 +405,7 @@
       const href = `wallet.html?id=${encodeURIComponent(w.slug)}`;
       return `<article class="card">
         <div class="card-head">
-          <div class="mono-tile" aria-hidden="true">${esc(initials(w.name))}</div>
+          ${tile(w)}
           <div><h2><a href="${href}">${esc(w.name)}</a></h2><div class="domain">${esc(domain(w.website))}</div></div>
         </div>
         <div class="tags">${[...types, ...custody].map((t) => `<span class="tag">${esc(t)}</span>`).join("")}</div>
@@ -553,7 +579,7 @@
       const colspan = cols.length + 1;
       let html = `<thead><tr><th scope="col" class="feat-col">Feature</th>${cols.map((w) => `
         <th scope="col"><a class="wallet-head" href="wallet.html?id=${encodeURIComponent(w.slug)}">
-          <span class="mono-tile" aria-hidden="true">${esc(initials(w.name))}</span>
+          ${tile(w)}
           <b>${esc(w.name)}</b><small>${esc(textOf(w, "wallet_model").join(" · "))}</small></a></th>`).join("")}
         </tr></thead><tbody>`;
 
@@ -688,7 +714,7 @@
         ${backLink()}
         <div class="profile-head">
           <div class="profile-id">
-            <div class="mono-tile" aria-hidden="true">${esc(initials(w.name))}</div>
+            ${tile(w)}
             <div><h1>${esc(w.name)}</h1>
               <div class="profile-meta">
                 ${w.website ? `<a href="${safeUrl(w.website)}" target="_blank" rel="noopener">${esc(domain(w.website))}</a>` : ""}
