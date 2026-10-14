@@ -23,20 +23,24 @@
     ["walletconnect_support", "WalletConnect"],
   ];
 
-  // Wallet logos in assets/logos/, keyed by listing slug (sources are in the
-  // README). "onLight" is a second file for the light theme, for marks that
-  // are too pale to see there; "fill" logos are complete app icons that cover
-  // the whole tile. Wallets not listed here keep the two-letter monogram.
+  // Wallet logos in assets/logos/, keyed by listing slug. "onLight" is a
+  // second file for the light theme, for marks that are too pale to see
+  // there; "fill" logos are complete app icons that cover the whole tile.
+  // Wallets not listed here keep the two-letter monogram.
   const LOGOS = {
-    "dfns": { src: "dfns.svg", onLight: "dfns-on-light.svg" },
+    "dfns": { src: "dfns.png", fill: true },
     "send": { src: "send.svg", fill: true },
     "askardex-wallet": { src: "askardex-wallet.png", fill: true },
-    "walley": { src: "walley.svg", onLight: "walley-on-light.svg" },
-    "blockdaemon-institutional-vault": { src: "blockdaemon-institutional-vault.svg", onLight: "blockdaemon-institutional-vault-on-light.svg" },
+    "walley": { src: "walley.png", fill: true },
+    "blockdaemon-institutional-vault": { src: "blockdaemon-institutional-vault.png", fill: true },
     "nightly": { src: "nightly.svg", fill: true },
     "metatarz": { src: "metatarz.png", fill: true },
-    "ledger-wallet": { src: "ledger-wallet.svg", onLight: "ledger-wallet-on-light.svg" },
+    "ledger-wallet": { src: "ledger-wallet.png", fill: true },
   };
+
+  // The ?v= this script was loaded with (set in the HTML pages). Logo URLs
+  // carry it too, so a replaced logo file isn't served stale from cache.
+  const ASSET_V = document.currentScript ? new URL(document.currentScript.src).searchParams.get("v") || "" : "";
 
   // Inline SVG icons (stroke uses currentColor so CSS sets the colour).
   const ICON = {
@@ -77,8 +81,9 @@
   function tile(w) {
     const logo = LOGOS[w.slug];
     if (!logo) return `<span class="mono-tile" aria-hidden="true">${esc(initials(w.name))}</span>`;
-    let imgs = `<img src="assets/logos/${logo.src}" alt=""${logo.onLight ? ' class="on-dark"' : ""}>`;
-    if (logo.onLight) imgs += `<img src="assets/logos/${logo.onLight}" alt="" class="on-light">`;
+    const url = (file) => `assets/logos/${file}${ASSET_V ? "?v=" + ASSET_V : ""}`;
+    let imgs = `<img src="${url(logo.src)}" alt=""${logo.onLight ? ' class="on-dark"' : ""}>`;
+    if (logo.onLight) imgs += `<img src="${url(logo.onLight)}" alt="" class="on-light">`;
     return `<span class="mono-tile${logo.fill ? " mono-tile--fill" : ""}" aria-hidden="true">${imgs}</span>`;
   }
 
