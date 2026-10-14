@@ -158,6 +158,13 @@ code { font-family: var(--mono); font-size: 0.9em; color: var(--text); }
 .card:hover { border-color: var(--hover-border); }
 .card-head { display: flex; align-items: center; gap: 12px; }
 .mono-tile { flex: none; width: 44px; height: 44px; border-radius: 11px; background: var(--purple-tint); color: var(--mono-text); display: flex; align-items: center; justify-content: center; font-family: var(--display); font-size: 13px; }
+/* Wallet logos in the tile (LOGOS in app.js): marks sit inset; "fill" logos
+   are app icons clipped to the tile's corners; on-dark/on-light swap by theme */
+.mono-tile img { display: block; width: 62%; height: 62%; object-fit: contain; }
+.mono-tile--fill { overflow: hidden; }
+.mono-tile--fill img { width: 100%; height: 100%; }
+.mono-tile .on-light, :root[data-theme="light"] .mono-tile .on-dark { display: none; }
+:root[data-theme="light"] .mono-tile .on-light { display: block; }
 .card h2 { margin: 0; font-size: 17px; font-weight: 600; line-height: 1.25; }
 .card h2 a { color: var(--text); }
 .domain { font-size: 12px; color: var(--muted); font-family: var(--mono); overflow-wrap: anywhere; }
