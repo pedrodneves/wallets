@@ -1,0 +1,57 @@
+# Keeps data.json in step with canton-foundation/wallets.
+# Runs every hour, and on demand from the Actions tab ("Run workflow").
+# If the wallets repo hasn't changed, nothing is committed.
+#
+# Must live in the site repo at: .github/workflows/sync-data.yml
+name: Sync wallet data
+
+on:
+  schedule:
+    - cron: "17 * * * *"      # hourly, at :17 to avoid the top-of-hour rush
+  workflow_dispatch: {}        # manual "Run workflow" button
+
+permissions:
+  contents: write              # needed to commit the refreshed data.json
+
+concurrency:
+  group: sync-data
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      # 1. This site's repo
+      - uses: actions/checkout@v4
+
+      # 2. The source of truth (public repo, read-only)
+      - uses: actions/checkout@v4
+        with:
+          repository: canton-foundation/wallets
+          path: _wallets_src
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install PyYAML
+        run: pip install pyyaml
+
+      # 3. Rebuild data.json
+      - name: Build data.json
+        run: python3 scripts/build_data.py --src _wallets_src --out data.json
+
+      # 4. Commit only if the wallet data itself changed. generated_at always
+      #    changes, so compare the file with that line ignored.
+      - name: Commit if changed
+        run: |
+          if git diff --quiet -I '"generated_at"' -- data.json; then
+            echo "No wallet changes."
+            git checkout -- data.json
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.json
+          git commit -m "Sync wallet data from canton-foundation/wallets@$(git -C _wallets_src rev-parse --short HEAD)"
+          git push
