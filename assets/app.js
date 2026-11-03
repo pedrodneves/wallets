@@ -36,6 +36,8 @@
     "nightly": { src: "nightly.svg", fill: true },
     "metatarz": { src: "metatarz.png", fill: true },
     "ledger-wallet": { src: "ledger-wallet.png", fill: true },
+    "mahawallet": { src: "mahawallet.png", fill: true },
+    "loop": { src: "loop.png", fill: true },
   };
 
   // The ?v= this script was loaded with (set in the HTML pages). Logo URLs
