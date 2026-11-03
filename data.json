@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-10-06 15:29 UTC",
+ "generated_at": "2026-11-03 20:01 UTC",
  "source_repo": "https://github.com/canton-foundation/wallets",
- "source_commit": "00e1b0e",
+ "source_commit": "a0653a0",
  "features": [
   {
    "id": "wallet_model",
@@ -450,7 +450,9 @@
     },
     "compliance": {
      "status": "text",
-     "values": []
+     "values": [
+      "SOC 2 Type II, ISO 27001, ISO 27017 and ISO 27018 certified; built-in KYT/AML transaction screening (Chainalysis, Elliptic, Global Ledger) and Travel Rule support (Notabene, Sumsub, Global Ledger), enforced through the policy engine with audit logs"
+     ]
     },
     "tokenization": {
      "status": "none"
@@ -1734,6 +1736,386 @@
     "claimed": 8,
     "proof": 6,
     "unsupported": 4,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "mahawallet",
+   "name": "MahaWallet",
+   "website": "https://mahawallet.xyz",
+   "contact": "contact@mahawallet.xyz",
+   "added": "2026-10-15",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/mahawallet.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail",
+      "Enterprise"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Browser-extension"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "Hybrid"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/mahawallet/mahawallet-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/mahawallet/mahawallet-self-attestation.md#two-step-cc-transfers-two_step_cc_transfers",
+     "verified": [],
+     "disputed": []
+    },
+    "preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/mahawallet/mahawallet-self-attestation.md#pre-approvals-for-cc-preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/mahawallet/mahawallet-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "none"
+    },
+    "cip_112_v2": {
+     "status": "none"
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/mahawallet/mahawallet-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "walletconnect_support": {
+     "status": "unsupported",
+     "reason": "Not built. dApps connect through the CIP-0103 window.canton provider."
+    },
+    "registry_preapprovals": {
+     "status": "none"
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "none"
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "BIP-39 seed phrase, SLIP-0010 Ed25519 derivation (Canton coin type), generated in the browser"
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "unsupported",
+     "reason": "Recovery is by seed phrase only; no guardian or contact-based recovery."
+    },
+    "multi_address": {
+     "status": "attested"
+    },
+    "distributed_parties": {
+     "status": "unsupported",
+     "reason": "Each account is a single-signer external party."
+    },
+    "utxo_merge_delegation": {
+     "status": "attested",
+     "proof_url": null,
+     "verified": [],
+     "disputed": []
+    },
+    "validator_hosting_byov": {
+     "status": "attested"
+    },
+    "validator_hosting_private": {
+     "status": "unsupported",
+     "reason": "No dedicated validator per customer."
+    },
+    "validator_hosting_shared": {
+     "status": "unsupported",
+     "reason": "Bring-your-own-validator only; there is no shared validator option."
+    },
+    "policy_workflows": {
+     "status": "unsupported",
+     "reason": "No approval-policy engine; the wallet owner approves each transaction."
+    },
+    "threshold_signature_scheme": {
+     "status": "unsupported",
+     "reason": "Single-key signing (Ed25519); no MPC or threshold scheme."
+    },
+    "hardware_wallet_support": {
+     "status": "unsupported",
+     "reason": "Keys are held by the extension; hardware signers are not supported."
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "unsupported",
+     "reason": "The wallet holds and moves tokens; it does not issue or tokenize assets."
+    },
+    "reward_minting": {
+     "status": "none"
+    },
+    "transfer_proof": {
+     "status": "none"
+    },
+    "clear_signing": {
+     "status": "none"
+    },
+    "integrated_swaps": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/mahawallet/mahawallet-self-attestation.md#integrated-swaps-integrated_swaps",
+     "verified": [],
+     "disputed": []
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "CC",
+      "USDCx",
+      "CBTC",
+      "cETH"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English",
+      "Indonesian"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 11,
+    "proof": 6,
+    "unsupported": 9,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "loop",
+   "name": "Loop Wallet",
+   "website": "https://wallet.looptech.io",
+   "contact": "support@looptech.io",
+   "added": "2026-10-29",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/loop.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Browser"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "SaaS"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#two-step-cc-transfers-two_step_cc_transfers",
+     "verified": [],
+     "disputed": []
+    },
+    "preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#pre-approvals-for-cc-preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#cip-0056-token-standard-allocation-support-cip_0056_allocation",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_112_v2": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#cip-112-token-standard-v2-support-cip_112_v2",
+     "verified": [],
+     "disputed": []
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "unsupported",
+     "reason": "In development"
+    },
+    "walletconnect_support": {
+     "status": "unsupported",
+     "reason": "dApp connectivity uses Loop's own SDK and ticket-based connection protocol."
+    },
+    "registry_preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#pre-approvals-for-da-registry-issued-assets-registry_preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "unsupported",
+     "reason": "A Wallet Gateway signing driver integration is not implemented."
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "Ed25519 key pair generated in the browser at sign-up. Users back up the private key directly; no seed phrase. The private key is available in wallet Settings. Backup import restores access after losing a password or passkey; recovery requires the saved private key."
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "unsupported",
+     "reason": "Guardian-based recovery is not supported."
+    },
+    "multi_address": {
+     "status": "unsupported",
+     "reason": "Multiple accounts within one wallet are not supported."
+    },
+    "distributed_parties": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#distributed-parties-distributed_parties",
+     "verified": [],
+     "disputed": []
+    },
+    "utxo_merge_delegation": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#utxo-merge-delegation-contract-enabled-utxo_merge_delegation",
+     "verified": [],
+     "disputed": []
+    },
+    "validator_hosting_byov": {
+     "status": "unsupported",
+     "reason": "The current Loop wallet does not expose a bring-your-own-validator option."
+    },
+    "validator_hosting_private": {
+     "status": "unsupported",
+     "reason": "The current Loop wallet does not expose a dedicated private-validator option."
+    },
+    "validator_hosting_shared": {
+     "status": "attested"
+    },
+    "policy_workflows": {
+     "status": "unsupported",
+     "reason": "Not offered"
+    },
+    "threshold_signature_scheme": {
+     "status": "unsupported",
+     "reason": "Wallet transactions use a single Ed25519 private key; MPC threshold signing is not implemented."
+    },
+    "hardware_wallet_support": {
+     "status": "unsupported",
+     "reason": "Direct transaction signing with a hardware wallet is not implemented."
+    },
+    "compliance": {
+     "status": "text",
+     "values": [
+      "Loop Wallet security audit dated 2026-07-29; public summary: https://docs.fivenorth.io/security/introduction/. This is a security audit, not a compliance certification."
+     ]
+    },
+    "tokenization": {
+     "status": "unsupported",
+     "reason": "The current Loop wallet does not expose a token issuance or tokenization flow."
+    },
+    "reward_minting": {
+     "status": "unsupported",
+     "reason": "Dev Fund coupon claiming is planned."
+    },
+    "transfer_proof": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#transfer-object--proof-of-transfer-support-transfer_proof",
+     "verified": [],
+     "disputed": []
+    },
+    "clear_signing": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#clear-signing-clear_signing",
+     "verified": [],
+     "disputed": []
+    },
+    "integrated_swaps": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#integrated-swaps-integrated_swaps",
+     "verified": [],
+     "disputed": []
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "Canton Coin (CC)",
+      "CIP-0056 tokens"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 15,
+    "proof": 13,
+    "unsupported": 12,
     "verified": 0,
     "disputed": 0
    }
