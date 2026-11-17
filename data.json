@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-03 20:01 UTC",
+ "generated_at": "2026-11-17 22:58 UTC",
  "source_repo": "https://github.com/canton-foundation/wallets",
- "source_commit": "a0653a0",
+ "source_commit": "7197813",
  "features": [
   {
    "id": "wallet_model",
@@ -1846,10 +1846,7 @@
      "reason": "Each account is a single-signer external party."
     },
     "utxo_merge_delegation": {
-     "status": "attested",
-     "proof_url": null,
-     "verified": [],
-     "disputed": []
+     "status": "none"
     },
     "validator_hosting_byov": {
      "status": "attested"
@@ -1915,7 +1912,7 @@
     }
    },
    "counts": {
-    "claimed": 11,
+    "claimed": 10,
     "proof": 6,
     "unsupported": 9,
     "verified": 0,
@@ -1997,12 +1994,14 @@
      "disputed": []
     },
     "cip_0103_dapp_api": {
-     "status": "unsupported",
-     "reason": "In development"
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#cip-0103-dapp-api-support-cip_0103_dapp_api",
+     "verified": [],
+     "disputed": []
     },
     "walletconnect_support": {
      "status": "unsupported",
-     "reason": "dApp connectivity uses Loop's own SDK and ticket-based connection protocol."
+     "reason": "WalletConnect is not supported. dApps connect through the Loop SDK, including its CIP-103 provider."
     },
     "registry_preapprovals": {
      "status": "proof",
@@ -2082,7 +2081,7 @@
     },
     "transfer_proof": {
      "status": "proof",
-     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#transfer-object--proof-of-transfer-support-transfer_proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/loop/loop-self-attestation.md#transfer-object-proof-of-transfer-support-transfer_proof",
      "verified": [],
      "disputed": []
     },
@@ -2113,9 +2112,202 @@
     }
    },
    "counts": {
-    "claimed": 15,
-    "proof": 13,
-    "unsupported": 12,
+    "claimed": 16,
+    "proof": 14,
+    "unsupported": 11,
+    "verified": 0,
+    "disputed": 0
+   }
+  },
+  {
+   "slug": "console-wallet",
+   "name": "Console Wallet",
+   "website": "https://consolewallet.io",
+   "contact": "support@consolewallet.io",
+   "added": "2026-11-12",
+   "source_url": "https://github.com/canton-foundation/wallets/blob/main/wallets/console-wallet.yaml",
+   "features": {
+    "wallet_model": {
+     "status": "text",
+     "values": [
+      "Retail"
+     ]
+    },
+    "custody_model": {
+     "status": "text",
+     "values": [
+      "Self-custodial"
+     ]
+    },
+    "form_factor": {
+     "status": "text",
+     "values": [
+      "Mobile",
+      "Browser-extension",
+      "Desktop"
+     ]
+    },
+    "deployment_model": {
+     "status": "text",
+     "values": [
+      "SaaS"
+     ]
+    },
+    "cc_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#cc-support-cc_support",
+     "verified": [],
+     "disputed": []
+    },
+    "two_step_cc_transfers": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#two-step-cc-transfers-two_step_cc_transfers",
+     "verified": [],
+     "disputed": []
+    },
+    "preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#pre-approvals-for-cc-preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_transfer": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#cip-0056-token-standard-transfer-support-cip_0056_transfer",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0056_allocation": {
+     "status": "none"
+    },
+    "cip_112_v2": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#cip-112-token-standard-v2-support-cip_112_v2",
+     "verified": [],
+     "disputed": []
+    },
+    "memo_tag_support": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#memo-tag-support-for-transfers-to-omnibus-accounts-memo_tag_support",
+     "verified": [],
+     "disputed": []
+    },
+    "cip_0103_dapp_api": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#cip-0103-dapp-api-support-cip_0103_dapp_api",
+     "verified": [],
+     "disputed": []
+    },
+    "walletconnect_support": {
+     "status": "unsupported",
+     "reason": "WalletConnect is available for EVM networks; Canton dApps connect via CIP-0103 (extension) or QR pairing with the mobile app"
+    },
+    "registry_preapprovals": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#pre-approvals-for-da-registry-issued-assets-registry_preapprovals",
+     "verified": [],
+     "disputed": []
+    },
+    "wallet_gateway_signing_driver": {
+     "status": "none"
+    },
+    "key_generation_method": {
+     "status": "text",
+     "values": [
+      "Seed phrase (mnemonic) generated on the user's device; keys never leave the device; unlock via password, passkeys (extension) or biometrics (mobile)"
+     ]
+    },
+    "key_recovery": {
+     "status": "attested"
+    },
+    "social_recovery": {
+     "status": "unsupported",
+     "reason": "Recovery is via seed phrase or private key export"
+    },
+    "multi_address": {
+     "status": "attested"
+    },
+    "distributed_parties": {
+     "status": "none"
+    },
+    "utxo_merge_delegation": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#utxo-merge-delegation-contract-enabled-utxo_merge_delegation",
+     "verified": [],
+     "disputed": []
+    },
+    "validator_hosting_byov": {
+     "status": "none"
+    },
+    "validator_hosting_private": {
+     "status": "none"
+    },
+    "validator_hosting_shared": {
+     "status": "none"
+    },
+    "policy_workflows": {
+     "status": "attested"
+    },
+    "threshold_signature_scheme": {
+     "status": "none"
+    },
+    "hardware_wallet_support": {
+     "status": "unsupported",
+     "reason": "Not supported yet"
+    },
+    "compliance": {
+     "status": "text",
+     "values": []
+    },
+    "tokenization": {
+     "status": "none"
+    },
+    "reward_minting": {
+     "status": "none"
+    },
+    "transfer_proof": {
+     "status": "none"
+    },
+    "clear_signing": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#clear-signing-clear_signing",
+     "verified": [],
+     "disputed": []
+    },
+    "integrated_swaps": {
+     "status": "proof",
+     "proof_url": "https://github.com/canton-foundation/wallets/blob/main/proofs/console-wallet/console-wallet-self-attestation.md#integrated-swaps-integrated_swaps",
+     "verified": [],
+     "disputed": []
+    },
+    "assets_supported": {
+     "status": "text",
+     "values": [
+      "CC",
+      "USDCx",
+      "CBTC",
+      "Other CIP-0056 tokens (auto-detected)",
+      "ETH / ERC-20 on any EVM networks (Ethereum and Base added by default)"
+     ]
+    },
+    "languages_supported": {
+     "status": "text",
+     "values": [
+      "English",
+      "Deutsch",
+      "Indonesia",
+      "Türkçe",
+      "español",
+      "français",
+      "italiano",
+      "हिन्दी"
+     ]
+    }
+   },
+   "counts": {
+    "claimed": 14,
+    "proof": 11,
+    "unsupported": 3,
     "verified": 0,
     "disputed": 0
    }
