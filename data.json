@@ -1,7 +1,7 @@
 {
- "generated_at": "2026-11-17 22:58 UTC",
+ "generated_at": "2026-11-19 22:15 UTC",
  "source_repo": "https://github.com/canton-foundation/wallets",
- "source_commit": "7197813",
+ "source_commit": "f0aaf77",
  "features": [
   {
    "id": "wallet_model",
